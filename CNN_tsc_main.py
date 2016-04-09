@@ -28,7 +28,7 @@ input_norm = True   # Do you want z-score input normalization?
 """Load the data"""
 # Datasets that were checked:
 # "Two_Patterns" test-accuracy 0.999
-# "ChlorineConcentration: test-accuracy 0.842
+# "ChlorineConcentration: test-accuracy 0.849
 # Both of these accuracies are State-of-the-art as in this article
 # "Multi-Scale Convolutional Neural Networks for Time Series Classification"
 # Cui 2016 ArXiv
@@ -267,4 +267,4 @@ plt.axis([0, step, 0, np.max(perf_collect)])
 plt.legend()
 plt.show()
 # We can now open TensorBoard. Run the following line from your terminal
-# tensorboard --logdir=/home/rob/Dropbox/ml_projetcs/LSTM/conv_lstm_log_tb
+# tensorboard --logdir=/home/rob/Dropbox/ml_projetcs/CNN_tsc/log_tb
