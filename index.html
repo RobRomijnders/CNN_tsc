@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Cnn tsc by RobRomijnders</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Cnn tsc</h1>
+        <p>A CNN for time-series classification</p>
+
+        <p class="view"><a href="https://github.com/RobRomijnders/CNN_tsc">View the Project on GitHub <small>RobRomijnders/CNN_tsc</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/RobRomijnders/CNN_tsc/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/RobRomijnders/CNN_tsc/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/RobRomijnders/CNN_tsc">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>
+<a id="a-convolutional-neural-network-for-time-series-classification" class="anchor" href="#a-convolutional-neural-network-for-time-series-classification" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>A Convolutional Neural Network for time-series classification</h3>
+
+<p>This post implements a CNN for time-series classification and benchmarks the performance on three of the <a href="http://www.cs.ucr.edu/%7Eeamonn/time_series_data/">UCR</a> time-series.</p>
+
+<p>CNN's are widely used for applications involving images. In this post, I show their performance on time-series. This project is a rebound after <a href="http://robromijnders.github.io/LSTM_tsc/">this</a> implementation of  LSTM's on the same data. The LSTM's only got 60% test-accuracy, whereas state-of-the-art is 99.8% test-accuracy. </p>
+
+<h2>
+<a id="mechanism" class="anchor" href="#mechanism" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mechanism</h2>
+
+<p>Many of our knowledge and intuition for CNN's on images carry over to time-series. The main difference in the code is the <em>stride</em> argument we pass to the conv-layer. We want the kernel to stride along the time-series, but not along the second dimension that we would have used for images. </p>
+
+<h2>
+<a id="batchnorm" class="anchor" href="#batchnorm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Batchnorm</h2>
+
+<p>This projects is also a showcase of batch normalization after the conv-layers. With help of <a href="http://stackoverflow.com/questions/33949786/how-could-i-use-batch-normalization-in-tensorflow">this</a> post on StackOverflow, the code is equipped with three batch-norm layers.</p>
+
+<h3>
+<a id="performance" class="anchor" href="#performance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Performance</h3>
+
+<p>We benchmark the implementation on the datasets from UCR. Specifically, we achieve 99.9% and 84.9% test-accuracy on <em>Two_Patterns</em> and <em>ChlorineConcentration</em>. Both performances have remarkable consequences.</p>
+
+<ul>
+<li>The CNN achieves 99.9% test-accuracy on <em>Two_Patterns</em>, beating our own implementation of an LSTM on the same dataset, which got only 60%. Over the next months, I'll work on another three time-series projects. I hope to get back to this result and explain why the LSTM unperforms and the CNN overperforms on this dataset. <em>Side note, <a href="http://arxiv.org/abs/1603.06995">this</a> article got only 99.8% test-accuracy</em>
+</li>
+<li>The CNN achieves 84.9% test-accuracy on <em>ChlorineConcentration</em>. This results improves on <a href="http://arxiv.org/abs/1603.06995">this</a> article, where the best performance was 79.7% and the second best at 74%. An improvement of 5.2% seems significant and I am interested to discuss this result with the researchers. By no means am I trying to attach anyone, I am eager to learn from other people's reasonings and design decisions.</li>
+</ul>
+
+<h3>
+<a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results</h3>
+
+<p>The graph of the CNN:
+<img src="https://github.com/RobRomijnders/CNN_tsc/blob/master/pic/graph.png?raw=true" alt="Graph">
+The evolution of accuracies based on a run with ChlorineConcentration
+<img src="https://github.com/RobRomijnders/CNN_tsc/blob/master/pic/train_val_acc_ChlorineConcentration.png?raw=true" alt="Accuracies">
+Showcase of TensorBoard
+<img src="https://github.com/RobRomijnders/CNN_tsc/blob/master/pic/tensorboard_hist.png?raw=true" alt="TensorBoard"></p>
+
+<p>As always, I am curious to any comments and questions. Reach me at <a href="mailto:romijndersrob@gmail.com">romijndersrob@gmail.com</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/RobRomijnders">RobRomijnders</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
