@@ -43,8 +43,9 @@
 <h2>
 <a id="batchnorm" class="anchor" href="#batchnorm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Batchnorm</h2>
 
-<p>This projects is also a showcase of batch normalization after the conv-layers. With help of <a href="http://stackoverflow.com/questions/33949786/how-could-i-use-batch-normalization-in-tensorflow">this</a> post on StackOverflow, the code is equipped with three batch-norm layers.
-A small code-snippet for illustration:</p>
+<p>This projects is also a showcase of batch normalization after the conv-layers. With help of <a href="http://stackoverflow.com/questions/33949786/how-could-i-use-batch-normalization-in-tensorflow">this</a> post on StackOverflow, the code is equipped with three batch-norm layers.</p>
+
+<p>A small code-snippet for illustration:</p>
 
 <pre><code>ewma = tf.train.ExponentialMovingAverage(decay=0.99)                  
 bn_conv1 = ConvolutionalBatchNormalizer(num_filt_1, 0.001, ewma, True)           
