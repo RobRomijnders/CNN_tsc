@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Cnn tsc by RobRomijnders</title>
+    <title>CNN TSC by RobRomijnders</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
@@ -15,7 +15,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Cnn tsc</h1>
+        <h1>CNN TSC</h1>
         <p>A CNN for time-series classification</p>
 
         <p class="view"><a href="https://github.com/RobRomijnders/CNN_tsc">View the Project on GitHub <small>RobRomijnders/CNN_tsc</small></a></p>
@@ -44,6 +44,21 @@
 <a id="batchnorm" class="anchor" href="#batchnorm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Batchnorm</h2>
 
 <p>This projects is also a showcase of batch normalization after the conv-layers. With help of <a href="http://stackoverflow.com/questions/33949786/how-could-i-use-batch-normalization-in-tensorflow">this</a> post on StackOverflow, the code is equipped with three batch-norm layers.</p>
+
+<pre><code>ewma = tf.train.ExponentialMovingAverage(decay=0.99)                  
+bn_conv1 = ConvolutionalBatchNormalizer(num_filt_1, 0.001, ewma, True)           
+update_assignments = bn_conv1.get_assigner() 
+a_conv1 = bn_conv1.normalize(a_conv1, train=bn_train)
+</code></pre>
+
+<ul>
+<li>
+<em>ewma</em> is the moving average function that monitors the mean and variance for use at test-time</li>
+<li>
+<em>ConvolutionalBatchNormalizer</em> is the class whose instances are batchnorm-layers. Documentation for this class is included in the project</li>
+<li>
+<em>train=bn_train</em> is a boolean operation distinguishing train-time and test-time for the batchnorm-layer</li>
+</ul>
 
 <h3>
 <a id="performance" class="anchor" href="#performance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Performance</h3>
