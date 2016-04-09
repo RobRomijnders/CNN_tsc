@@ -21,20 +21,20 @@ max_iterations = 2000
 batch_size = 100
 dropout = 0.5       #Dropout rate in the fully connected layer
 plot_row = 5        #How many rows do you want to plot in the visualization
-regularization = 1e-1
+regularization = 1e-4
 learning_rate = 2e-3
 input_norm = True   # Do you want z-score input normalization?
 
 """Load the data"""
 # Datasets that were checked:
 # "Two_Patterns" test-accuracy 0.999
-# "ChlorineConcentration: test-accuracy 0.805
+# "ChlorineConcentration: test-accuracy 0.842
 # Both of these accuracies are State-of-the-art as in this article
 # "Multi-Scale Convolutional Neural Networks for Time Series Classification"
 # Cui 2016 ArXiv
 UCR = True
 if UCR:
-  dataset = "Cricket_Y"
+  dataset = "ChlorineConcentration"
   datadir = 'UCR_TS_Archive_2015/'+ dataset + '/' + dataset
   data_train = np.loadtxt(datadir+'_TRAIN',delimiter=',')
   data_test_val = np.loadtxt(datadir+'_TEST',delimiter=',')
@@ -225,7 +225,7 @@ merged = tf.merge_all_summaries()
 perf_collect = np.zeros((3,int(np.floor(max_iterations /100))))
 
 with tf.Session() as sess:
-  writer = tf.train.SummaryWriter("/home/rob/Dropbox/ml_projects/LSTM/conv_lstm_log_tb", sess.graph_def)
+  writer = tf.train.SummaryWriter("/home/rob/Dropbox/ml_projects/CNN_tsc/log_tb", sess.graph_def)
 
   sess.run(tf.initialize_all_variables())
   
