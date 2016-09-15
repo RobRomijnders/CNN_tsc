@@ -20,7 +20,7 @@ max_iterations = 20000
 batch_size = 64
 dropout = 1.0       #Dropout rate in the fully connected layer
 plot_row = 5        #How many rows do you want to plot in the visualization
-learning_rate = 2e-6
+learning_rate = 2e-5
 input_norm = False   # Do you want z-score input normalization?
 
 """Load the data"""
@@ -132,7 +132,7 @@ with tf.name_scope("Conv1") as scope:
   a_conv1 = conv2d(x_image, W_conv1) + b_conv1
 
 with tf.name_scope('Batch_norm_conv1') as scope:
-    a_conv1 = tf.contrib.layers.batch_norm(a_conv1,is_training=bn_train)
+    a_conv1 = tf.contrib.layers.batch_norm(a_conv1,is_training=bn_train,updates_collections=None)
     h_conv1 = tf.nn.relu(a_conv1)
 
 with tf.name_scope("Conv2") as scope:
@@ -141,7 +141,7 @@ with tf.name_scope("Conv2") as scope:
   a_conv2 = conv2d(h_conv1, W_conv2) + b_conv2
 
 with tf.name_scope('Batch_norm_conv2') as scope:
-    a_conv2 = tf.contrib.layers.batch_norm(a_conv2,is_training=bn_train)
+    a_conv2 = tf.contrib.layers.batch_norm(a_conv2,is_training=bn_train,updates_collections=None)
     h_conv2 = tf.nn.relu(a_conv2)
 
 with tf.name_scope("Fully_Connected1") as scope:
