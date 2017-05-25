@@ -77,7 +77,8 @@ if True:  #Set true if you want to visualize the actual time-series
     for c in np.unique(y_train):    #Loops over classes, plot as columns
         ind = np.where(y_train == c)
         ind_plot = np.random.choice(ind[0],size=plot_row)
-        for n in xrange(plot_row):  #Loops over rows
+        for n in range(plot_row):  #Loops over rows
+            c = int(c)
             axarr[n,c].plot(X_train[ind_plot[n],:])
             # Only shops axes for bottom row and left column
             if not n == plot_row-1:
@@ -162,16 +163,16 @@ with tf.name_scope("SoftMax") as scope:
 #                  tf.nn.l2_loss(W_conv3) + tf.nn.l2_loss(b_conv3) +
 #                  tf.nn.l2_loss(W_fc1) + tf.nn.l2_loss(b_fc1) +
 #                  tf.nn.l2_loss(W_fc2) + tf.nn.l2_loss(b_fc2))
-    loss = tf.nn.sparse_softmax_cross_entropy_with_logits(h_fc2,y_)
+    loss = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=h_fc2,labels=y_)
     cost = tf.reduce_sum(loss) / batch_size
 #    cost += regularization*regularizers
-    loss_summ = tf.scalar_summary("cross entropy_loss", cost)
+    loss_summ = tf.summary.scalar("cross entropy_loss", cost)
 with tf.name_scope("train") as scope:
     tvars = tf.trainable_variables()
     #We clip the gradients to prevent explosion
     grads = tf.gradients(cost, tvars)
     optimizer = tf.train.AdamOptimizer(learning_rate)
-    gradients = zip(grads, tvars)
+    gradients = list(zip(grads, tvars))
     train_step = optimizer.apply_gradients(gradients)
     # The following block plots for every trainable variable
     #  - Histogram of the entries of the Tensor
@@ -186,17 +187,17 @@ with tf.name_scope("train") as scope:
 
       numel +=tf.reduce_sum(tf.size(variable))
 
-      h1 = tf.histogram_summary(variable.name, variable)
-      h2 = tf.histogram_summary(variable.name + "/gradients", grad_values)
-      h3 = tf.histogram_summary(variable.name + "/gradient_norm", clip_ops.global_norm([grad_values]))
+      h1 = tf.summary.histogram(variable.name, variable)
+      h2 = tf.summary.histogram(variable.name + "/gradients", grad_values)
+      h3 = tf.summary.histogram(variable.name + "/gradient_norm", clip_ops.global_norm([grad_values]))
 with tf.name_scope("Evaluating_accuracy") as scope:
     correct_prediction = tf.equal(tf.argmax(h_fc2,1), y_)
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
-    accuracy_summary = tf.scalar_summary("accuracy", accuracy)
+    accuracy_summary = tf.summary.scalar("accuracy", accuracy)
 
 
 #Define one op to call all summaries
-merged = tf.merge_all_summaries()
+merged = tf.summary.merge_all()
 
 def print_tvars():
   tvars = tf.trainable_variables()
@@ -212,9 +213,9 @@ perf_collect = np.zeros((3,int(np.floor(max_iterations /100))))
 cost_ma = 0.0
 acc_ma = 0.0
 with tf.Session() as sess:
-  writer = tf.train.SummaryWriter("/home/rob/Dropbox/ml_projects/CNN_tsc/log_tb", sess.graph_def)
+  writer = tf.summary.FileWriter("./log_tb", sess.graph)
 
-  sess.run(tf.initialize_all_variables())
+  sess.run(tf.global_variables_initializer())
 
   step = 0      # Step is a counter for filling the numpy array perf_collect
   for i in range(max_iterations):
@@ -258,4 +259,4 @@ plt.axis([0, step, 0, np.max(perf_collect)])
 plt.legend()
 plt.show()
 # We can now open TensorBoard. Run the following line from your terminal
-# tensorboard --logdir=/home/rob/Dropbox/ml_projetcs/CNN_tsc/log_tb
+# tensorboard --logdir=./log_tb
